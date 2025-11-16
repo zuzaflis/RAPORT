@@ -11,8 +11,8 @@
 | Rola | Imię i Nazwisko           |
 |------|---------------------------|
 | Audytor wiodący | inż. Zuzanna Flis |
-| Audytor wiodący | inż. Dagmara Pasek |
-| Audytor wiodący | inż. Barbara Kowalska |
+| Audytor Bezpieczeństwa | inż. Dagmara Pasek |
+| Audytor Bezpieczeństwa | inż. Barbara Kowalska |
 
 ### 1.2. Informacje o Audycie
 
@@ -93,7 +93,7 @@ Aplikacja w obecnym stanie **NIE POWINNA BYĆ WDROŻONA** w środowisku produkcy
 - **Technologia:** Java, Spring Boot, Angular, Typescript
 - **Baza danych:** MySQL z Hibernate (JPA)
 - **Autentykacja:** JWT (JSON Web Tokens)
-- **Architektura:** Modularna (8 modułów funkcjonalnych)
+- **Architektura:** Oparta o RESTful API (5 głównych kontrolerów)
 
 #### 4.1.2. Audytowane Moduły
 
@@ -124,16 +124,16 @@ Audyt przeprowadzono z **pełnym dostępem do kodu źródłowego**, co pozwolił
 - **CVSS** 4.0 - Ocena zagrożenia
 
 #### 4.2.3. Użyte Narzędzia
-// TODO
+
 | Kategoria | Narzędzie | Wersja | Przeznaczenie |
 |-----------|-----------|--------|---------------|
-| **Analiza kodu** | Visual Studio Code | 1.103.2 | Przegląd kodu źródłowego |
-| **Analiza statyczna** | ESLint + Security Plugin | 9.18.0 | Wykrywanie wzorców niebezpiecznego kodu |
-| **Analiza zależności** | npm audit | 10.x | Skanowanie znanych podatności w pakietach |
-| **Testowanie API** | Postman | 10.x | Manualne testowanie endpointów |
-| **Testowanie SQL Injection** | sqlmap | 1.7.x | Automatyczne wykrywanie SQL Injection |
-| **Analiza JWT** | jwt.io / jwt-tool | - | Analiza tokenów JWT |
-| **Skanowanie portów** | nmap | 7.94 | Rekonesans infrastruktury |
+| **Analiza kodu** | IntelliJ IDEA | 202x.x | Przegląd kodu źródłowego Java |
+| **Analiza kodu** | Visual Studio Code | 1.x | Przegląd kodu źródłowego Angular |
+| **Analiza zależności** | OWASP Dependency-Check | 12.1.9 | Skanowanie podatności w `pom.xml` |
+| **Analiza zależności** | npm audit | 10.x | Skanowanie podatności w `package.json` |
+| **Testowanie API** | Postman | 11.x | Manualne testowanie endpointów |
+| **Testowanie SQL Injection** | sqlmap | 1.8.x | Automatyczne wykrywanie SQL Injection |
+| **Wirtualizacja** | Docker Desktop | 4.x | Uruchomienie środowiska testowego |
 
 ### 4.3. Środowisko Testowe
 
@@ -144,10 +144,9 @@ Audyt przeprowadzono z **pełnym dostępem do kodu źródłowego**, co pozwolił
 docker-compose up --build
 
 # Aplikacja dostępna pod adresem
-http://localhost:4200
+http://localhost:8080
 
-# Dokumentacja API (Swagger)
-http://localhost:3000/api
+
 ```
 
 #### 4.3.2. Parametry Środowiska
@@ -169,17 +168,16 @@ Wykorzystano dane testowe dostarczone w pliku exam_portal.sql, zawierające uży
 ### 4.4. Ograniczenia Audytu
 
 #### 4.4.1. Ograniczenia Czasowe i Zakresowe
-// TODO
+
 | Obszar | Ograniczenie | Powód | Wpływ |
 |--------|-------------|-------|-------|
 | **Testy penetracyjne infrastruktury** | Niewykonane | Brak dostępu do środowiska produkcyjnego | Nie zidentyfikowano podatności infrastrukturalnych (firewall, load balancer, itp.) |
 | **Testy obciążeniowe (DoS/DDoS)** | Niewykonane | Ograniczenia środowiska lokalnego | Nie oceniono odporności na ataki DoS |
-| **Testowanie aplikacji front-end** | Niewykonane | Brak aplikacji klienckiej | Nie wykryto podatności XSS, CSRF po stronie front-endu |
-| **Audyt konfiguracji Docker** | Częściowy | Kontener nie był uruchomiony w środowisku testowym | Nie oceniono bezpieczeństwa izolacji kontenerów |
+| **Testowanie aplikacji front-end** | Poza zakresem | Audyt skupiony na API (backendzie) | Nie testowano podatności po stronie klienta (np. XSS, CSRF). |
+| **Audyt konfiguracji Docker** | Częściowy | Audyt skupiono na aplikacji w kontenerze, a nie na bezpieczeństwie samej konfiguracji Dockera (np. hardening, network policies). | Nie oceniono bezpieczeństwa izolacji kontenerów i konfiguracji sieci Docker. |
 | **Testy compliance (RODO, PCI-DSS)** | Poza zakresem | Audyt techniczny, nie prawny | Nie oceniono zgodności z regulacjami |
 
 #### 4.4.2. Czego Nie Można Było Sprawdzić
-// TODO
 1. **Race conditions**
    - **Powód:** Ograniczone możliwości symulacji współbieżności
    - **Wpływ:** Nie zidentyfikowano podatności związanych z równoczesnym dostępem
