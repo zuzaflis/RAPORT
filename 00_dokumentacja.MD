@@ -40,7 +40,7 @@ Podczas audytu stosowano czterostopniową skalę oceny ryzyka podatności:
 ---
 
 ## 3. STRESZCZENIE WYKONAWCZE
-
+//TODO
 ### 3.1. Podsumowanie wyników
 
 Przeprowadzony audyt bezpieczeństwa aplikacji e-commerce opartej na frameworku NestJS wykazał **liczne krytyczne podatności** stanowiące bezpośrednie zagrożenie dla bezpieczeństwa systemu, danych użytkowników oraz ciągłości działania biznesu.
