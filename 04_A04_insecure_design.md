@@ -4,20 +4,10 @@
 
 #### 📚 Wyjaśnienie Zagadnienia
 
-**Insecure Design** (Niebezpieczny Projekt) to nowa kategoria w OWASP Top 10 2021, która koncentruje się na **błędach w projektowaniu i architekturze** aplikacji, a nie na błędach implementacji.
+**Insecure Design** (Niebezpieczny Projekt) to kategoria obejmująca braki w architekturze bezpieczeństwa aplikacji. W przeciwieństwie do błędów w kodzie (bugs), są to braki w samych założeniach projektowych. Programista mógł napisać kod bezbłędnie, ale jeśli nie zaprojektował mechanizmów obronnych, aplikacja pozostaje podatna.
 
-Różnica między Insecure Design a błędami implementacji:
-- **Insecure Design**: Brak wymaganych mechanizmów bezpieczeństwa w projekcie (np. brak rate limitingu w projekcie)
-- **Błąd implementacji**: Źle zaimplementowany mechanizm bezpieczeństwa (np. rate limiting z błędną logiką)
+W audytowanej aplikacji kluczowym brakiem projektowym jest nieobecność mechanizmu **Rate Limitingu** (ograniczania liczby żądań). Brak tej bariery na poziomie architektury sprawia, że system nie potrafi odróżnić normalnego ruchu użytkownika od automatycznego ataku **Brute Force** (siłowego łamania haseł), pozwalając na nieskończoną liczbę prób logowania w krótkim czasie.
 
-Główne obszary:
-- **Brak rate limiting** - brak ograniczenia liczby żądań
-- **Brak walidacji logiki biznesowej** - możliwość ominięcia workflow
-- **Niewłaściwe zarządzanie stanem** - race conditions
-- **Brak threat modeling** - nieprzewidziane scenariusze ataku
-- **Nadmierne zaufanie do danych klienta** - client-side security
-
-Ta kategoria podkreśla znaczenie **Security by Design** i **Secure Development Lifecycle (SDL)**.
 
 ---
 

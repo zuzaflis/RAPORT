@@ -4,16 +4,11 @@
 
 #### 📚 Wyjaśnienie Zagadnienia
 
-**Vulnerable and Outdated Components** dotyczy używania bibliotek, frameworków i innych komponentów oprogramowania, które:
-- Zawierają znane podatności (CVE)
-- Są przestarzałe i nie otrzymują aktualizacji bezpieczeństwa
-- Mają niewspierane wersje
+#### 📚 Wyjaśnienie Zagadnienia
 
-Główne zagrożenia:
-- **Znane CVEs** - publicznie znane podatności z exploitami
-- **Supply chain attacks** - ataki przez zależności (wykorzystane biblioteki)
-- **Unmaintained packages** - porzucone biblioteki
-- **Transitive dependencies** - podatności w zależnościach zależności
+**Vulnerable and Outdated Components** (Podatne i Nieaktualne Komponenty) dotyczy ryzyka związanego z łańcuchem dostaw oprogramowania (Supply Chain). Współczesne aplikacje, takie jak ta oparta na Spring Boot i Angularze, budowane są z setek gotowych bibliotek zewnętrznych. Jeśli którakolwiek z tych bibliotek zawiera lukę bezpieczeństwa, cała aplikacja staje się na nią podatna.
+
+Problem ten jest oznaczany numerami **CVE** (Common Vulnerabilities and Exposures). Podczas audytu wykorzystujemy narzędzia **SCA** (Software Composition Analysis), aby zidentyfikować biblioteki, które nie otrzymały aktualizacji bezpieczeństwa i mogą zostać wykorzystane przez atakujących do przejęcia serwera (RCE) lub zablokowania usługi (DoS).
 
 ---
 

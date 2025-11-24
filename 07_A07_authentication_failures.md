@@ -4,16 +4,11 @@
 
 #### 📚 Wyjaśnienie Zagadnienia
 
-**Identification and Authentication Failures** (Błędy Identyfikacji i Uwierzytelniania) obejmują podatności związane z niewłaściwą implementacją mechanizmów uwierzytelniania i zarządzania sesjami. Kategoria ta dotyczy:
+**Identification and Authentication Failures** (Błędy Identyfikacji i Uwierzytelniania) to kategoria grupująca słabości w procesie potwierdzania tożsamości użytkownika. Jest to pierwsza linia obrony aplikacji – jeśli zawiedzie, wszystkie inne zabezpieczenia mogą okazać się bezużyteczne.
 
-- **Słabych lub brakujących mechanizmów uwierzytelniania** - możliwość ataku brute-force, brak MFA
-- **Niewłaściwego zarządzania hasłami** - brak polityki silnych haseł, brak soli, słabe hashowanie
-- **Błędów w zarządzaniu sesjami** - przewidywalne tokeny, brak timeout, brak invalidacji
-- **Credential Stuffing i Password Spraying** - możliwość automatycznych ataków na konta użytkowników
-- **Słabych mechanizmów odzyskiwania hasła** - podatne na przejęcie konta
-
-W kontekście aplikacji webowych i API, błędy uwierzytelniania są jednymi z najczęstszych wektorów ataku. Skuteczne uwierzytelnianie wymaga nie tylko silnych haseł, ale także dodatkowych warstw ochrony (MFA), rate limiting, monitorowania podejrzanych logowań oraz właściwego zarządzania cyklem życia sesji.
-
+W ramach tego audytu zidentyfikowaliśmy dwa krytyczne braki:
+* **Słaba polityka haseł:** System pozwala na tworzenie trywialnych haseł (np. jednoliterowych), co czyni je podatnymi na ataki słownikowe. Mimo że hasła są hashowane w bazie, ich niska entropia (złożoność) sprawia, że są łatwe do złamania.
+* **Brak MFA (Multi-Factor Authentication):** System opiera się wyłącznie na jednym składniku (wiedzy – haśle). Brak drugiego składnika (np. kodu jednorazowego) oznacza, że kompromitacja hasła administratora prowadzi do natychmiastowego i całkowitego przejęcia systemu.
 
 #### 🔍 PODATNOŚĆ #1: Brak Polityki Silnych Haseł
 

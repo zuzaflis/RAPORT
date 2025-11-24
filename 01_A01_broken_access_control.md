@@ -4,14 +4,11 @@
 
 #### 📚 Wyjaśnienie Zagadnienia
 
-**Broken Access Control** (Nieprawidłowa Kontrola Dostępu) to kategoria podatności związana z niewłaściwą implementacją mechanizmów kontrolujących, do jakich zasobów i funkcjonalności mają dostęp użytkownicy.
+**Broken Access Control** (Błędy Kontroli Dostępu) to sytuacja, w której mechanizmy autoryzacji zawodzą, pozwalając użytkownikom na działania wykraczające poza ich uprawnienia. Należy odróżnić to od uwierzytelniania (logowania) – tutaj użytkownik jest poprawnie zalogowany, ale system nie blokuje mu dostępu do zasobów innych osób lub administratorów.
 
-Obejmuje to:
-- **IDOR (Insecure Direct Object References)** - bezpośrednie odniesienia do obiektów bez weryfikacji uprawnień
-- **Missing Function Level Access Control** - brak kontroli dostępu do funkcji administracyjnych
-- **Path Traversal** - możliwość dostępu do plików poza przewidzianym katalogiem
-- **Privilege Escalation** - możliwość podniesienia swoich uprawnień
-- **Bypassing Access Controls** - omijanie kontroli dostępu przez manipulację parametrami
+W kontekście tego audytu skupiliśmy się na dwóch kluczowych wektorach:
+* **Privilege Escalation (Podniesienie uprawnień):** Sytuacja, w której zwykły użytkownik uzyskuje dostęp do funkcji administracyjnych (np. `CategoryController`) z powodu błędnej konfiguracji `Spring Security`.
+* **IDOR (Insecure Direct Object References):** Błąd polegający na bezpośrednim dostępie do obiektów w bazie (np. profili użytkowników) poprzez manipulację identyfikatorem w adresie URL, bez weryfikacji, czy dany zasób należy do pytającego.
 
 ---
 
