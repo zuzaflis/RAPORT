@@ -13,6 +13,7 @@ W analizowanym projekcie `Quiz-Web-App` zidentyfikowano **4 podatności** tej kl
 
 **Identyfikator:** `VUL-A02-001`
 **Poziom ryzyka:** 🔴 **KRYTYCZNY**
+**CWE:** CWE-798 – Use of Hard-coded Credentials
 
 ##### 📍 Lokalizacja
 
@@ -70,6 +71,7 @@ ports:
 
 **Identyfikator:** `VUL-A02-002`
 **Poziom ryzyka:** 🔴 **KRYTYCZNY**
+**CWE:** **CWE-321 – Use of Hard-coded Cryptographic Key**
 
 ##### 📍 Lokalizacja
 
@@ -132,7 +134,7 @@ private final static String secretKey ="20e77bab9dcfb08fa10..."; // Hardcoded
 
 **Identyfikator:** `VUL-A02-003`
 **Poziom ryzyka:** 🟠 **WYSOKI**
-
+**CWE:** **CWE-319 – Cleartext Transmission of Sensitive Information**
 
 ##### 📍 Lokalizacja
 
@@ -172,6 +174,7 @@ const AUTH_API = 'http://localhost:8080/api/v1/auth/'; // ❌ HTTP
 
 **Identyfikator:** `VUL-A02-004`
 **Poziom ryzyka:** 🟠 **WYSOKI**
+**CWE:** **CWE-200 – Exposure of Sensitive Information**
 
 ##### 📍 Lokalizacja
 
