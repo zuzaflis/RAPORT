@@ -3,11 +3,11 @@ Poza naprawą zidentyfikowanych podatności, zaleca się wdrożenie systemowych 
 
 11.1. Proces wytwarzania oprogramowania (SSDLC)
  * Security by Design: Uwzględnianie wymogów bezpieczeństwa i prywatności oraz modelowanie zagrożeń (Threat Modeling) na etapie projektowania.
- * Standardy kodowania: Regularne szkolenia dla deweloperów (OWASP Top 10), obowiązkowe code review pod kątem bezpieczeństwa oraz pair programming dla funkcji krytycznych.
+ * Standardy kodowania: Regularne szkolenia dla deweloperów (OWASP Top 10), obowiązkowe code review pod kątem bezpieczeństwa.
  * Automatyzacja testów (CI/CD): Wdrożenie automatycznych skanerów bezpieczeństwa kodu (SAST), aplikacji (DAST), kontenerów oraz zależności (SCA) w potokach wdrożeniowych.
 
 11.2. Infrastruktura i Ochrona
- * Obrona w głąb (Defense in Depth): Stosowanie WAF, Rate Limitingu oraz ścisłej segmentacji sieci.
+ * Defense in Depth: Stosowanie WAF, Rate Limitingu oraz ścisłej segmentacji sieci.
  * Zarządzanie dostępem: Rygorystyczne stosowanie zasady najmniejszych uprawnień (Principle of Least Privilege) dla użytkowników i serwisów.
 
 11.3. Monitoring i Reagowanie na Incydenty
