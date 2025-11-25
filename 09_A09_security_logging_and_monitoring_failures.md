@@ -62,6 +62,7 @@ done
 
 **Identyfikator:** `VUL-A09-002`
 **Poziom ryzyka:** 🔴 **KRYTYCZNY**
+**CWE:** CWE-1191 — Missing Sensitive Operation Audit
 
 #### 📍 Lokalizacja
 
