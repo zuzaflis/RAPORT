@@ -13,6 +13,7 @@ W analizowanym projekcie `Quiz-Web-App` zidentyfikowano **2 podatności**, któr
 
 **Identyfikator:** `VUL-A09-001`
 **Poziom ryzyka:** 🟠 **WYSOKI**
+**CWE:** CWE-778 – Insufficient Logging
 
 #### 📍 Lokalizacja
 
