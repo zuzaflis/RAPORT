@@ -153,15 +153,6 @@ Atakujący w tej samej sieci Wi-Fi uruchamia przechwytywanie pakietów.
 sudo tcpdump -i lo0 -A -s 0 tcp port 8080
 ```
 
-**Przechwycony pakiet:**
-
-```http
-POST /api/v1/auth/login HTTP/1.1
-Host: quiz-app.local:8080
-...
-{"username":"admin","password":"MySecretPassword123"}
-```
-
 **Rezultat:** Atakujący widzi hasło w czystym tekście.
 
 ##### 💻 Kod Podatny
