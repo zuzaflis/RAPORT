@@ -8,7 +8,7 @@ Kategoria **A10:2021 – Server-Side Request Forgery (SSRF)** opisuje sytuacje, 
 
 W aplikacjach typu CRUD (jak **Quiz-Web-App**) podatność SSRF pojawia się głównie wtedy, gdy dodane są funkcje typu „pobierz zasób z URL” (np. import danych z linku, pobieranie obrazka profilowego z podanego adresu).
 
-Na podstawie analizy kodu backendu (przesłane pliki z `backend/src/main/java/...`) oraz struktury danych wejściowych stwierdzono, że **aplikacja w aktualnej wersji nie zawiera funkcjonalności narażonych na SSRF**. Poniższa sekcja ma charakter audytu potwierdzającego brak podatności.
+Na podstawie analizy kodu stwierdzono, że **aplikacja w aktualnej wersji nie zawiera funkcjonalności narażonych na SSRF**. Poniższa sekcja ma charakter audytu potwierdzającego brak podatności.
 
 ---
 
@@ -20,7 +20,7 @@ Na podstawie analizy kodu backendu (przesłane pliki z `backend/src/main/java/..
 
 #### 📍 Lokalizacja
 
-**Zakres analizy kodu backendu:**
+**Zakres analizy kodu:**
 
 * kontrolery: `QuizController`, `QuestionController`, `UserController`, `CategoryController`, `AdminController`, `AuthenticationController`,
 * serwisy: `QuizService`, `QuestionService`, `UserService`, `CategoryService`,
@@ -28,8 +28,6 @@ Na podstawie analizy kodu backendu (przesłane pliki z `backend/src/main/java/..
 * encje i DTO: m.in. `Quiz`, `Question`, `User`, `Result`, `Category`, `QuizRequest`, `QuestionRequest`, `EvalRequest`, `RegisterRequest`, `AuthenticationRequest`.
 
 #### 📝 Opis podatności
-
-W kodzie backendu:
 
 * **nie występują** klienci HTTP po stronie serwera (`RestTemplate`, `WebClient`, `HttpClient`, `OkHttp` itp.),
 * nie ma bezpośredniego użycia `java.net.URL` / `HttpURLConnection`,
@@ -57,7 +55,7 @@ i **nie są nigdzie wykorzystywane do budowy URL-i, na które serwer wykonywałb
 
 1. **Przegląd importów w kontrolerach i serwisach**
 
-   W przesłanych plikach nie ma importów typowych klientów HTTP, takich jak:
+   W kodzie nie ma importów typowych klientów HTTP, takich jak:
 
    ```java
    import org.springframework.web.client.RestTemplate;
